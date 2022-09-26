@@ -26,6 +26,11 @@ clear.onclick = function() {
 
 equals.addEventListener('click', () => assignSecondNumber());
 
+deleteNum.onclick = function() {
+    displayArray.pop();
+    display.innerText = displayArray.join('');
+}
+
 function displayNumbers(number) {
     displayedValue = parseInt(number);
     displayArray.push(displayedValue);
@@ -42,7 +47,7 @@ function assignFirstNum(symbol) {
     if (!num) {
         firstNumber = parseInt(display.innerText);
     } else {
-        firstNumber = parseInt(displayResult.innerText);
+        firstNumber = num;
     }
 
     operator = symbol;
@@ -64,28 +69,26 @@ function assignSecondNumber() {
 
 
 function add (a, b){
-    return a + b;
+    return Math.round((a + b) * 100) / 100;
 };
 
 
 function subtract (a, b){
-    return a - b;
+    return Math.round((a - b) * 100) / 100;
 };
 
 
 function multiply (a, b){
-    return a * b;
+    return Math.round((a * b) * 100) / 100;
 };
 
 
 function divide (a, b){
-    return a / b;
+    return Math.round((a / b) * 100) / 100;
 };
 
 function operate(operator, a, b){
 
-    let checkNum = a;
-    
     let tempResult;
 
     if (!a) {
