@@ -50,7 +50,7 @@ const updateLowerDisplay = () => {
 // Create a function that updates the uppper display
 const updateUpperDisplay = () => {
     if (upperDisplay) {
-        upperDisplay.textContent = `${prevNumber ?? ''} ${operator ?? ''}`
+        upperDisplay.textContent = `${prevNumber ?? ''} ${operator ?? ''} `
     }
 };
 
@@ -65,13 +65,13 @@ const doCalculation = (leftOperand:number, operator:string, rightOperand:number)
 };
 
 // Create a function that handles number key press
-const handleNumberKeyPress = (e:MouseEvent | KeyboardEvent) => {
+const handleNumberKeyPress = (e:Event) => {
     displayNumber += (e.target as HTMLInputElement).value;
     updateLowerDisplay();
 };
 
 // Create a function that handles opertor key press
-const handleOperatorKeyPress = (e:MouseEvent | KeyboardEvent) => {
+const handleOperatorKeyPress = (e:Event) => {
     const keyValue = (e.target as HTMLInputElement).value;
     const num = Number(displayNumber);
     if (prevNumber === null) {
@@ -89,13 +89,39 @@ const handleOperatorKeyPress = (e:MouseEvent | KeyboardEvent) => {
 };
 
 // Create a function that handles the equal key press
-const handleEqualKeyPress = (e:MouseEvent | KeyboardEvent) => {
+const handleEqualKeyPress = (e:Event) => {
     const num = Number(displayNumber);
     if (prevNumber === null) return;
     if (operator === null) return;
     doCalculation(prevNumber, operator, num ?? 0);
+    if (upperDisplay) {
+        upperDisplay.textContent += `${num} = `
+    };
     displayNumber = "";
-    operator = null;
-    updateUpperDisplay();
+    operator = null;  
 };
 
+// Create a function to handle clear button
+const handleClearBtn = () => window.location.reload();
+
+// Create a function to handle delete button
+const handleDeleteBtn = () => {
+    displayNumber = displayNumber.slice(0, -1);
+    updateLowerDisplay();
+}
+
+numberBtns.forEach(btn => btn.addEventListener("click", (ev) => {
+    handleNumberKeyPress(ev)
+}));
+
+operatorBtns.forEach(btn => btn.addEventListener("click", (ev) => {
+    handleOperatorKeyPress(ev);
+}));
+
+equalBtn?.addEventListener("click", (ev) => {
+    handleEqualKeyPress(ev);
+});
+
+clearBtn?.addEventListener("click", handleClearBtn);
+
+deleteBtn?.addEventListener("click", handleDeleteBtn);
