@@ -19,11 +19,10 @@ const divide = (a: number, b: number):DivisionError | number  => {
     return a / b;
 };
 
-// Create 4 variables to hold the firstNumber, secondNumber, operator and displayNumber
-let firstNumber = null;
-let secondNumber = null;
-let operator = null;
-let displayNumber: number | DivisionError = 0;
+// Create 4 variables to hold the prevNumber, secondNumber, operator and displayNumber
+let prevNumber: number | null = null;
+let operator: string | null = null;
+let displayNumber: string = "";
 
 // Create a function that does the calculation and returns the result
 const operate = (leftOperand: number, operator: string, rightOperand: number) => {
@@ -36,7 +35,67 @@ const operate = (leftOperand: number, operator: string, rightOperand: number) =>
             return multiply(leftOperand, rightOperand);
         case ('/'):
             return divide(leftOperand, rightOperand);
+        default:
+            return '';
     }
-}
+};
 
-// Create a function that displays the current input to the user.
+// Create a function that updates the lower display
+const updateLowerDisplay = () => {
+    if (lowerDisplay) {
+        lowerDisplay.textContent = displayNumber;
+    };
+};
+
+// Create a function that updates the uppper display
+const updateUpperDisplay = () => {
+    if (upperDisplay) {
+        upperDisplay.textContent = `${prevNumber ?? ''} ${operator ?? ''}`
+    }
+};
+
+// Create a helper function that handles the calculation
+const doCalculation = (leftOperand:number, operator:string, rightOperand:number) => {
+    const result = operate(leftOperand, operator, rightOperand);
+    if (typeof result === "number") {
+        prevNumber = result;
+    }
+    displayNumber = result.toString();
+    updateLowerDisplay();
+};
+
+// Create a function that handles number key press
+const handleNumberKeyPress = (e:MouseEvent | KeyboardEvent) => {
+    displayNumber += (e.target as HTMLInputElement).value;
+    updateLowerDisplay();
+};
+
+// Create a function that handles opertor key press
+const handleOperatorKeyPress = (e:MouseEvent | KeyboardEvent) => {
+    const keyValue = (e.target as HTMLInputElement).value;
+    const num = Number(displayNumber);
+    if (prevNumber === null) {
+        num ? prevNumber = num : prevNumber = 0;
+        displayNumber = "";
+        operator = keyValue;
+        updateUpperDisplay();
+        return;
+    };
+    if (operator === null) operator = keyValue;
+    doCalculation(prevNumber, operator, num || 0);
+    displayNumber = ""
+    operator = keyValue;
+    updateUpperDisplay();
+};
+
+// Create a function that handles the equal key press
+const handleEqualKeyPress = (e:MouseEvent | KeyboardEvent) => {
+    const num = Number(displayNumber);
+    if (prevNumber === null) return;
+    if (operator === null) return;
+    doCalculation(prevNumber, operator, num ?? 0);
+    displayNumber = "";
+    operator = null;
+    updateUpperDisplay();
+};
+
