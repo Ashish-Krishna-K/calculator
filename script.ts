@@ -8,7 +8,8 @@ const clearBtn = document.querySelector('button.clear');
 const deleteBtn = document.querySelector('button.delete');
 const numberBtns = document.querySelectorAll('button.number');
 const operatorBtns = document.querySelectorAll('button.operator');
-const equalBtn = document.querySelector('button.equal')
+const equalBtn = document.querySelector('button.equal');
+const decimalBtn = document.querySelector('button.decimal');
 
 // Create 4 functions for addition, subtraction, multiplication and division
 const add = (a: number, b: number) => a + b;
@@ -101,6 +102,14 @@ const handleEqualKeyPress = (e:Event) => {
     operator = null;  
 };
 
+// Create a function that handles decimal key
+const handleDecimalKeyPress = (e:Event) => {
+    const keyValue = (e.target as HTMLInputElement).value;
+    if (displayNumber.indexOf(keyValue) !== -1) return;
+    displayNumber += keyValue;
+    updateLowerDisplay();
+}
+
 // Create a function to handle clear button
 const handleClearBtn = () => window.location.reload();
 
@@ -113,6 +122,10 @@ const handleDeleteBtn = () => {
 numberBtns.forEach(btn => btn.addEventListener("click", (ev) => {
     handleNumberKeyPress(ev)
 }));
+
+decimalBtn?.addEventListener("click", (ev) => {
+    handleDecimalKeyPress(ev);
+})
 
 operatorBtns.forEach(btn => btn.addEventListener("click", (ev) => {
     handleOperatorKeyPress(ev);

@@ -6,6 +6,7 @@ var deleteBtn = document.querySelector('button.delete');
 var numberBtns = document.querySelectorAll('button.number');
 var operatorBtns = document.querySelectorAll('button.operator');
 var equalBtn = document.querySelector('button.equal');
+var decimalBtn = document.querySelector('button.decimal');
 // Create 4 functions for addition, subtraction, multiplication and division
 var add = function (a, b) { return a + b; };
 var subtract = function (a, b) { return a - b; };
@@ -95,6 +96,14 @@ var handleEqualKeyPress = function (e) {
     displayNumber = "";
     operator = null;
 };
+// Create a function that handles decimal key
+var handleDecimalKeyPress = function (e) {
+    var keyValue = e.target.value;
+    if (displayNumber.indexOf(keyValue) !== -1)
+        return;
+    displayNumber += keyValue;
+    updateLowerDisplay();
+};
 // Create a function to handle clear button
 var handleClearBtn = function () { return window.location.reload(); };
 // Create a function to handle delete button
@@ -105,6 +114,9 @@ var handleDeleteBtn = function () {
 numberBtns.forEach(function (btn) { return btn.addEventListener("click", function (ev) {
     handleNumberKeyPress(ev);
 }); });
+decimalBtn === null || decimalBtn === void 0 ? void 0 : decimalBtn.addEventListener("click", function (ev) {
+    handleDecimalKeyPress(ev);
+});
 operatorBtns.forEach(function (btn) { return btn.addEventListener("click", function (ev) {
     handleOperatorKeyPress(ev);
 }); });
