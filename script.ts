@@ -1,5 +1,14 @@
 // We create a division error type to ensure only the error is returned as a string
-type DivisionError = "OOPS!!! Can't divide by zero!"
+type DivisionError = "OOPS!!! Can't divide by zero!";
+
+// Create the variables that connects to the various DOM elements
+const upperDisplay = document.querySelector('div.upper-display');
+const lowerDisplay = document.querySelector('div.lower-display');
+const clearBtn = document.querySelector('button.clear');
+const deleteBtn = document.querySelector('button.delete');
+const numberBtns = document.querySelectorAll('button.number');
+const operatorBtns = document.querySelectorAll('button.operator');
+const equalBtn = document.querySelector('button.equal')
 
 // Create 4 functions for addition, subtraction, multiplication and division
 const add = (a: number, b: number) => a + b;
@@ -29,3 +38,5 @@ const operate = (leftOperand: number, operator: string, rightOperand: number) =>
             return divide(leftOperand, rightOperand);
     }
 }
+
+// Create a function that displays the current input to the user.
