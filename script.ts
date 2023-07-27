@@ -11,6 +11,15 @@ const operatorBtns = document.querySelectorAll('button.operator');
 const equalBtn = document.querySelector('button.equal');
 const decimalBtn = document.querySelector('button.decimal');
 
+// Create 4 variables to hold the prevNumber, secondNumber, operator and displayNumber
+let prevNumber: number | null = null;
+let operator: string | null = null;
+let displayNumber: string = "";
+
+// Create arrays holding numbers and opperators
+const numbersArray:string[] = "0123456789".split('');
+const operatorArray:string[] = "+-*/".split('');
+
 // Create 4 functions for addition, subtraction, multiplication and division
 const add = (a: number, b: number) => a + b;
 const subtract = (a: number, b: number) => a - b;
@@ -19,11 +28,6 @@ const divide = (a: number, b: number):DivisionError | number  => {
     if (a === 0 || b === 0) return "OOPS!!! Can't divide by zero!";
     return a / b;
 };
-
-// Create 4 variables to hold the prevNumber, secondNumber, operator and displayNumber
-let prevNumber: number | null = null;
-let operator: string | null = null;
-let displayNumber: string = "";
 
 // Create a function that does the calculation and returns the result
 const operate = (leftOperand: number, operator: string, rightOperand: number) => {
@@ -66,14 +70,13 @@ const doCalculation = (leftOperand:number, operator:string, rightOperand:number)
 };
 
 // Create a function that handles number key press
-const handleNumberKeyPress = (e:Event) => {
-    displayNumber += (e.target as HTMLInputElement).value;
+const handleNumberKeyPress = (keyValue:string) => {
+    displayNumber += keyValue;
     updateLowerDisplay();
 };
 
 // Create a function that handles opertor key press
-const handleOperatorKeyPress = (e:Event) => {
-    const keyValue = (e.target as HTMLInputElement).value;
+const handleOperatorKeyPress = (keyValue: string) => {
     const num = Number(displayNumber);
     if (prevNumber === null) {
         num ? prevNumber = num : prevNumber = 0;
@@ -90,7 +93,7 @@ const handleOperatorKeyPress = (e:Event) => {
 };
 
 // Create a function that handles the equal key press
-const handleEqualKeyPress = (e:Event) => {
+const handleEqualKeyPress = (keyValue:string) => {
     const num = Number(displayNumber);
     if (prevNumber === null) return;
     if (operator === null) return;
@@ -99,13 +102,11 @@ const handleEqualKeyPress = (e:Event) => {
         upperDisplay.textContent += `${num} = `
     };
     prevNumber = null;
-    // displayNumber = "";
     operator = null;  
 };
 
 // Create a function that handles decimal key
-const handleDecimalKeyPress = (e:Event) => {
-    const keyValue = (e.target as HTMLInputElement).value;
+const handleDecimalKeyPress = (keyValue:string) => {
     if (displayNumber.indexOf(keyValue) !== -1) return;
     displayNumber += keyValue;
     updateLowerDisplay();
@@ -120,22 +121,46 @@ const handleDeleteBtn = () => {
     updateLowerDisplay();
 }
 
+// Create a function that handles keyboard inputs
+const handleKeyboardInput = (key:string) => {
+    if (numbersArray.indexOf(key) !== -1) {
+        handleNumberKeyPress(key);        
+    }
+    if (operatorArray.indexOf(key) !== -1) {
+        handleOperatorKeyPress(key);
+    }
+    if (key === ".") {
+        handleDecimalKeyPress(key);
+    }
+    if (key === "=" || key === "Enter") {
+        handleEqualKeyPress(key);
+    }
+    if (key === "Backspace") {
+        handleDeleteBtn();
+    }
+}
+
 numberBtns.forEach(btn => btn.addEventListener("click", (ev) => {
-    handleNumberKeyPress(ev)
+    handleNumberKeyPress((ev.target as HTMLInputElement).value)
 }));
 
 decimalBtn?.addEventListener("click", (ev) => {
-    handleDecimalKeyPress(ev);
+    handleDecimalKeyPress((ev.target as HTMLInputElement).value);
 })
 
 operatorBtns.forEach(btn => btn.addEventListener("click", (ev) => {
-    handleOperatorKeyPress(ev);
+    handleOperatorKeyPress((ev.target as HTMLInputElement).value);
 }));
 
 equalBtn?.addEventListener("click", (ev) => {
-    handleEqualKeyPress(ev);
+    handleEqualKeyPress((ev.target as HTMLInputElement).value);
 });
 
 clearBtn?.addEventListener("click", handleClearBtn);
 
 deleteBtn?.addEventListener("click", handleDeleteBtn);
+
+document.addEventListener('keydown', (ev) => {
+    ev.preventDefault();
+    handleKeyboardInput(ev.key);
+})
