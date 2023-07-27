@@ -1,0 +1,85 @@
+html,
+body {
+    min-height: 100svh;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section#calculator {
+    outline: 1px solid black;
+}
+
+#calculator * {
+    /* outline: 1px solid black; */
+}
+
+section#calculator > *{
+    outline: 1px solid black;
+    padding: 1em;
+}
+
+.upper-display,
+.lower-display {
+    min-height: 1.2em;
+    font-size: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 4px 12px;
+}
+
+.upper-display {
+    font-size: 1.5em;
+    min-height: 1.2em;
+}
+
+
+div.input-btns {
+    display: flex;
+    flex-direction: column;
+}
+
+div.input-rows {
+    display: flex;
+    gap: 1em;
+    padding: 1em;
+}
+
+div.clear-btns {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+
+div.clear-btns > button {
+    width: 45%;
+}
+
+button.number,
+button.operator,
+button.decimal,
+button.equal {
+    width: 100px;
+}
+
+button {
+    font-size: 2em;
+    padding: 8px 12px;
+}
+
+footer {
+    text-align: center;
+}
