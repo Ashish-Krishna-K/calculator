@@ -93,7 +93,8 @@ var handleEqualKeyPress = function (e) {
         upperDisplay.textContent += "".concat(num, " = ");
     }
     ;
-    displayNumber = "";
+    prevNumber = null;
+    // displayNumber = "";
     operator = null;
 };
 // Create a function that handles decimal key

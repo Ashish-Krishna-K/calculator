@@ -98,7 +98,8 @@ const handleEqualKeyPress = (e:Event) => {
     if (upperDisplay) {
         upperDisplay.textContent += `${num} = `
     };
-    displayNumber = "";
+    prevNumber = null;
+    // displayNumber = "";
     operator = null;  
 };
 
