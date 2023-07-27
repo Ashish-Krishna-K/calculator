@@ -17,16 +17,16 @@ let operator: string | null = null;
 let displayNumber: string = "";
 
 // Create arrays holding numbers and opperators
-const numbersArray:string[] = "0123456789".split('');
-const operatorArray:string[] = "+-*/".split('');
+const numbersArray: string[] = "0123456789".split('');
+const operatorArray: string[] = "+-*/".split('');
 
 // Create 4 functions for addition, subtraction, multiplication and division
-const add = (a: number, b: number) => a + b;
-const subtract = (a: number, b: number) => a - b;
-const multiply = (a: number, b: number) => a * b;
-const divide = (a: number, b: number):DivisionError | number  => {
+const add = (a: number, b: number) => Math.round((a + b) * 1000000000) / 1000000000;
+const subtract = (a: number, b: number) => Math.round((a - b) * 1000000000) / 1000000000;
+const multiply = (a: number, b: number) => Math.round((a * b) * 1000000000) / 1000000000;
+const divide = (a: number, b: number): DivisionError | number => {
     if (a === 0 || b === 0) return "OOPS!!! Can't divide by zero!";
-    return a / b;
+    return Math.round((a / b) * 1000000000) / 1000000000;
 };
 
 // Create a function that does the calculation and returns the result
@@ -60,7 +60,7 @@ const updateUpperDisplay = () => {
 };
 
 // Create a helper function that handles the calculation
-const doCalculation = (leftOperand:number, operator:string, rightOperand:number) => {
+const doCalculation = (leftOperand: number, operator: string, rightOperand: number) => {
     const result = operate(leftOperand, operator, rightOperand);
     if (typeof result === "number") {
         prevNumber = result;
@@ -70,7 +70,7 @@ const doCalculation = (leftOperand:number, operator:string, rightOperand:number)
 };
 
 // Create a function that handles number key press
-const handleNumberKeyPress = (keyValue:string) => {
+const handleNumberKeyPress = (keyValue: string) => {
     displayNumber += keyValue;
     updateLowerDisplay();
 };
@@ -93,7 +93,7 @@ const handleOperatorKeyPress = (keyValue: string) => {
 };
 
 // Create a function that handles the equal key press
-const handleEqualKeyPress = (keyValue:string) => {
+const handleEqualKeyPress = (keyValue: string) => {
     const num = Number(displayNumber);
     if (prevNumber === null) return;
     if (operator === null) return;
@@ -102,11 +102,11 @@ const handleEqualKeyPress = (keyValue:string) => {
         upperDisplay.textContent += `${num} = `
     };
     prevNumber = null;
-    operator = null;  
+    operator = null;
 };
 
 // Create a function that handles decimal key
-const handleDecimalKeyPress = (keyValue:string) => {
+const handleDecimalKeyPress = (keyValue: string) => {
     if (displayNumber.indexOf(keyValue) !== -1) return;
     displayNumber += keyValue;
     updateLowerDisplay();
@@ -122,9 +122,9 @@ const handleDeleteBtn = () => {
 }
 
 // Create a function that handles keyboard inputs
-const handleKeyboardInput = (key:string) => {
+const handleKeyboardInput = (key: string) => {
     if (numbersArray.indexOf(key) !== -1) {
-        handleNumberKeyPress(key);        
+        handleNumberKeyPress(key);
     }
     if (operatorArray.indexOf(key) !== -1) {
         handleOperatorKeyPress(key);

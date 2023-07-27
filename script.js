@@ -15,13 +15,13 @@ var displayNumber = "";
 var numbersArray = "0123456789".split('');
 var operatorArray = "+-*/".split('');
 // Create 4 functions for addition, subtraction, multiplication and division
-var add = function (a, b) { return a + b; };
-var subtract = function (a, b) { return a - b; };
-var multiply = function (a, b) { return a * b; };
+var add = function (a, b) { return Math.round((a + b) * 1000000000) / 1000000000; };
+var subtract = function (a, b) { return Math.round((a - b) * 1000000000) / 1000000000; };
+var multiply = function (a, b) { return Math.round((a * b) * 1000000000) / 1000000000; };
 var divide = function (a, b) {
     if (a === 0 || b === 0)
         return "OOPS!!! Can't divide by zero!";
-    return a / b;
+    return Math.round((a / b) * 1000000000) / 1000000000;
 };
 // Create a function that does the calculation and returns the result
 var operate = function (leftOperand, operator, rightOperand) {
@@ -146,6 +146,5 @@ clearBtn === null || clearBtn === void 0 ? void 0 : clearBtn.addEventListener("c
 deleteBtn === null || deleteBtn === void 0 ? void 0 : deleteBtn.addEventListener("click", handleDeleteBtn);
 document.addEventListener('keydown', function (ev) {
     ev.preventDefault();
-    console.log(ev.key);
     handleKeyboardInput(ev.key);
 });
