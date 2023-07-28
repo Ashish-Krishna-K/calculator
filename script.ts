@@ -21,7 +21,7 @@ const operatorArray: string[] = "+-*/".split('');
 const add = (a: number, b: number) => Math.round((a + b) * 1000000000) / 1000000000;
 const subtract = (a: number, b: number) => Math.round((a - b) * 1000000000) / 1000000000;
 const multiply = (a: number, b: number) => Math.round((a * b) * 1000000000) / 1000000000;
-const divide = (a: number, b: number): DivisionError | number => {
+const divide = (a: number, b: number): string | number => {
     if (a === 0 || b === 0) return "OOPS!!! Can't divide by zero!";
     return Math.round((a / b) * 1000000000) / 1000000000;
 };
