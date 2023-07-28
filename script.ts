@@ -90,10 +90,9 @@ const handleOperatorKeyPress = (keyValue: string) => {
 };
 
 // Create a function that handles the equal key press
-const handleEqualKeyPress = (keyValue: string) => {
+const handleEqualKeyPress = () => {
     const num = Number(displayNumber);
-    if (prevNumber === null) return;
-    if (operator === null) return;
+    if (prevNumber === null || operator === null || displayNumber === "") return;
     doCalculation(prevNumber, operator, num ?? 0);
     if (upperDisplay) {
         upperDisplay.textContent += `${num} = `
@@ -130,7 +129,7 @@ const handleKeyboardInput = (key: string) => {
         handleDecimalKeyPress(key);
     }
     if (key === "=" || key === "Enter") {
-        handleEqualKeyPress(key);
+        handleEqualKeyPress();
     }
     if (key === "Backspace") {
         handleDeleteBtn();
@@ -149,9 +148,7 @@ operatorBtns.forEach(btn => btn.addEventListener("click", (ev) => {
     handleOperatorKeyPress((ev.target as HTMLInputElement).value);
 }));
 
-equalBtn?.addEventListener("click", (ev) => {
-    handleEqualKeyPress((ev.target as HTMLInputElement).value);
-});
+equalBtn?.addEventListener("click", handleEqualKeyPress);
 
 clearBtn?.addEventListener("click", handleClearBtn);
 

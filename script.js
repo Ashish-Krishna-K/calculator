@@ -84,11 +84,9 @@ var handleOperatorKeyPress = function (keyValue) {
     updateUpperDisplay();
 };
 // Create a function that handles the equal key press
-var handleEqualKeyPress = function (keyValue) {
+var handleEqualKeyPress = function () {
     var num = Number(displayNumber);
-    if (prevNumber === null)
-        return;
-    if (operator === null)
+    if (prevNumber === null || operator === null || displayNumber === "")
         return;
     doCalculation(prevNumber, operator, num !== null && num !== void 0 ? num : 0);
     if (upperDisplay) {
@@ -124,7 +122,7 @@ var handleKeyboardInput = function (key) {
         handleDecimalKeyPress(key);
     }
     if (key === "=" || key === "Enter") {
-        handleEqualKeyPress(key);
+        handleEqualKeyPress();
     }
     if (key === "Backspace") {
         handleDeleteBtn();
@@ -139,9 +137,7 @@ decimalBtn === null || decimalBtn === void 0 ? void 0 : decimalBtn.addEventListe
 operatorBtns.forEach(function (btn) { return btn.addEventListener("click", function (ev) {
     handleOperatorKeyPress(ev.target.value);
 }); });
-equalBtn === null || equalBtn === void 0 ? void 0 : equalBtn.addEventListener("click", function (ev) {
-    handleEqualKeyPress(ev.target.value);
-});
+equalBtn === null || equalBtn === void 0 ? void 0 : equalBtn.addEventListener("click", handleEqualKeyPress);
 clearBtn === null || clearBtn === void 0 ? void 0 : clearBtn.addEventListener("click", handleClearBtn);
 deleteBtn === null || deleteBtn === void 0 ? void 0 : deleteBtn.addEventListener("click", handleDeleteBtn);
 document.addEventListener('keydown', function (ev) {
