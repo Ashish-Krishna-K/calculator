@@ -1,6 +1,3 @@
-// We create a division error type to ensure only the error is returned as a string
-type DivisionError = "OOPS!!! Can't divide by zero!";
-
 // Create the variables that connects to the various DOM elements
 const upperDisplay = document.querySelector('div.upper-display');
 const lowerDisplay = document.querySelector('div.lower-display');
